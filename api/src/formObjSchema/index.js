@@ -46,7 +46,13 @@ const keys = {
     p_pcnTcn: Joi.string().required().description('PCN / TCN'),
     p_sid: Joi.string().required().regex(/^\d+$/ig).description('SID'),
     p_publicAssistance: Joi.string().required().description('Public Assistance'),
-    p_basicLivingExpenses: Joi.string().description('Details for non payment').allow('').default(''),
+    //Need  to test this to verify it works before applying rule to other 
+    //checkboxes with dependencies. 
+    p_basicLivingExpenses: Joi.string().when('p_3.3',{
+        is: Joi.bool().valid(true).required(),
+        then: Joi.valid(false),
+        otherwise: Joi.string().required()
+    }).description('Details for non payment').allow('').default(''),
     p_otherCompelling: Joi.string().description('Other compelling reasons').allow('').default(''),
     p_cantDoCommSvc: Joi.string().description('Reason for inability to do community service').allow('').default(''),
     p_notWillful: Joi.string().description('Reason for non payment').default(''),
@@ -60,26 +66,36 @@ const keys = {
     p_state: Joi.string().required().description('State'),
     p_zip:  Joi.string().required().description('State'),
     p_myEmail:  Joi.string().required().description('Email'),
-    p_ruleWithoutHearingCheckbox: Joi.boolean().description('Rule without hearing Checkbox'),
-    p_telephoneHearing: Joi.boolean().description('Telephone hearing Checkbox'),
-    videoHearing: Joi.boolean().description('Video Hearing Checkbox'),
-    p_inPersonHearing: Joi.boolean().description('In person hearing Checkbox'),
-    p_haveAHearing: Joi.boolean().description('Have a hearing Checkbox'),
-    "p_1.1": Joi.boolean().description('LFO Interest Checkbox'),
-    "p_1.2": Joi.boolean().description('Restitution Interest Checkbox'), 
-    "p_2.1": Joi.boolean().description('Remission or Reduction Checkbox'), 
-    "p_2.2": Joi.boolean().description('Additional Time Checkbox'), 
-    "p_2.3": Joi.boolean().description('Collection Checkbox'), 
-    "p_2.4": Joi.boolean().description('Community Restitution Checkbox'), 
-    "p_3.1": Joi.boolean().description('Not paid in full Checkbox'), 
-    "p_3.2": Joi.boolean().description('Indigent because Checkbox'), 
-    "p_3.3": Joi.boolean().description('Public assistance Checkbox'), 
-    "p_3.3b": Joi.boolean().description('Annual Income LESS THAN poverty Checkbox'), 
-    "p_3.3c": Joi.boolean().description('Annual Income GREATER THAN poverty'), 
-    "p_3.3d": Joi.boolean().description('Other Compelling circumstances Checkbox'), 
-    "p_3.3d": Joi.boolean().description('Other Compelling Checkbox'), 
-    "p_3.4": Joi.boolean().description('Am Homeless Checkbox'), 
-    "p_3.5": Joi.boolean().description('Not able to do community serice Checkbox'), 
-    "p_3.6": Joi.boolean().description('Not paid LFO in timely manner'), 
-    "p_3.7": Joi.boolean().description('Optional'),
+    p_ruleWithoutHearingCheckbox: Joi.bool().description('Rule without hearing Checkbox'),
+    p_telephoneHearing: Joi.bool().description('Telephone hearing Checkbox'),
+    videoHearing: Joi.bool().description('Video Hearing Checkbox'),
+    p_inPersonHearing: Joi.bool().description('In person hearing Checkbox'),
+    p_haveAHearing: Joi.bool().description('Have a hearing Checkbox'),
+    "p_1.1": Joi.bool().description('LFO Interest Checkbox'),
+    "p_1.2": Joi.bool().description('Restitution Interest Checkbox'), 
+    "p_2.1": Joi.bool().description('Remission or Reduction Checkbox'), 
+    "p_2.2": Joi.bool().description('Additional Time Checkbox'), 
+    "p_2.3": Joi.bool().description('Collection Checkbox'), 
+    "p_2.4": Joi.bool().description('Community Restitution Checkbox'), 
+    "p_3.1": Joi.bool().description('Not paid in full Checkbox'), 
+    "p_3.2": Joi.bool().description('Indigent because Checkbox'), 
+    //verify that basic living expenses is populated. If populated then set the value, otherwise, thorw error
+    "p_3.3": Joi.when('p_basicLivingExpenses', {
+        //verify that text is gt 10 and lt 300 chars
+        is: Joi.string().required(),
+        then: Joi.valid(null),
+        otherwise: Joi.bool.required()
+    }).description('Public assistance Checkbox'), 
+    "p_3.3b": Joi.bool().description('Annual Income LESS THAN poverty Checkbox'), 
+    "p_3.3c": Joi.bool().description('Annual Income GREATER THAN poverty'), 
+    "p_3.3d": Joi.bool().description('Other Compelling circumstances Checkbox'), 
+    "p_3.3d": Joi.bool().description('Other Compelling Checkbox'), 
+    "p_3.4": Joi.bool().description('Am Homeless Checkbox'), 
+    "p_3.5": Joi.bool().description('Not able to do community serice Checkbox'), 
+    "p_3.6": Joi.bool().description('Not paid LFO in timely manner'), 
+    "p_3.7": Joi.bool().description('Optional'),
 }
+
+const formShcema = Joi.object().keys(keys).unknown(); 
+
+module.exports = formShcema; 
