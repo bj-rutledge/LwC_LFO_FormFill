@@ -21,9 +21,6 @@ const { validForm, invalidForm } = require("../testObjects");
 
 /**Test to see if we receive an error property. */
 const validateSchema = (testObj) => schema.validate(testObj).hasOwnProperty("error");
-// console.log(validForm,invalidForm)
-// console.log(schema.validate(invalidForm).hasOwnProperty('error'))
-// console.log(schema.validate(invalidForm))
 
 /**test schema with valid object. Make sure that we are getting setting rules properly */
 test("should return true for valid form", () => {
