@@ -44,7 +44,7 @@ const keys = {
     p_nameOnJS: Joi.string().required().description('Name on JNS'),
     p_dateOfBirth: Joi.date().required().description('Date of Birth'),
     p_pcnTcn: Joi.string().required().description('PCN / TCN'),
-    p_sid: Joi.string().required().regex(/^\d+$/ig).description('SID'),
+    p_sid: Joi.string().regex(/^\d+$/).description('SID'),
     p_publicAssistance: Joi.string().required().description('Public Assistance'),
     //Need  to test this to verify it works before applying rule to other 
     //checkboxes with dependencies. 
@@ -58,7 +58,7 @@ const keys = {
     p_notWillful: Joi.string().description('Reason for non payment').default(''),
     p_signedAtCity: Joi.string().required().description('Signed at City'),
     p_signedAtState: Joi.string().required().description('Signed at state'),
-    p_signedOnDate: Joi.string().required().description('Signed on Date'),
+    p_signedOnDate: Joi.date().required().description('Signed on Date'),
     p_printName: Joi.string().required().description('Print Name'),
     p_myLegalNameIs: Joi.string().required().description('Legal Name'), 
     p_street: Joi.string().required().description('Street'),
@@ -83,8 +83,8 @@ const keys = {
     "p_3.3": Joi.when('p_basicLivingExpenses', {
         //verify that text is gt 10 and lt 300 chars
         is: Joi.string().required(),
-        then: Joi.valid(null),
-        otherwise: Joi.bool.required()
+        then: Joi.valid(true),
+        otherwise: Joi.bool().required()
     }).description('Public assistance Checkbox'), 
     "p_3.3b": Joi.bool().description('Annual Income LESS THAN poverty Checkbox'), 
     "p_3.3c": Joi.bool().description('Annual Income GREATER THAN poverty'), 
@@ -96,6 +96,5 @@ const keys = {
     "p_3.7": Joi.bool().description('Optional'),
 }
 
-const formShcema = Joi.object().keys(keys).unknown(); 
 
-module.exports = formShcema; 
+module.exports = Joi.object().keys(keys).unknown(); 

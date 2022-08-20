@@ -4,7 +4,7 @@
   "description": "Api for LwC LFO form filler.",
   "main": "index.js",
   "scripts": {
-    "test": "/d/OneDrive/Documents/projects/LivingWithConviction/FormFiller/LwC_LFO_FormFill/api"
+    "test": "jest"
   },
   "repository": {
     "type": "git",
