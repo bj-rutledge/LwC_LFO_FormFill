@@ -13,7 +13,7 @@ module.exports.validForm = validForm = {
   p_stateOfWaGoesHere: "State of Washington",
   p_causeNumberGoesHere: "03-12123-123SA",
   p_nameOnJS: "The Dude",
-  p_dateOfBirth: new Date(1977, 4, 11),
+  p_dateOfBirth: new Date(1977, 4, 11).toString(),
   p_pcnTcn: "2333",
   p_sid: "12347",
   p_publicAssistance: "Need public assistance",
@@ -25,7 +25,7 @@ module.exports.validForm = validForm = {
   p_notWillful: "Not willful",
   p_signedAtCity: "seattle",
   p_signedAtState: "WA",
-  p_signedOnDate: new Date(Date.now()),
+  p_signedOnDate: new Date(Date.now()).toDateString(),
   p_printName: "The Dude",
   p_myLegalNameIs: "The Dude",
   p_street: "1234 My Street",
@@ -61,7 +61,6 @@ module.exports.validForm = validForm = {
 //Invalid form NO date in date of birth 
 module.exports.invalidForm =  invalidForm = {
 
-  p_superiorGoesHere: "King County Superior Court",
   p_countyGoesHere: "King",
   p_stateOfWaGoesHere: "State of Washington",
   p_causeNumberGoesHere: "03-12123-123SA",
@@ -78,9 +77,9 @@ module.exports.invalidForm =  invalidForm = {
   p_notWillful: "Not willful",
   p_signedAtCity: "seattle",
   p_signedAtState: "WA",
-  p_signedOnDate: new Date(Date.now()),
-  p_printName: "The Dude",
-  p_myLegalNameIs: "The Dude",
+  p_signedOnDate: {},
+  p_printName: 2,
+  p_myLegalNameIs: {},
   p_street: "1234 My Street",
   p_city: "Seattle",
   p_state: "WA",
