@@ -4,10 +4,8 @@
  * Living with Conviction.org
  **/
 
-
-//valid form that follows all the rules set. 
+//valid form that follows all the rules set.
 module.exports.validForm = validForm = {
-
   p_superiorGoesHere: "King County Superior Court",
   p_countyGoesHere: "King",
   p_stateOfWaGoesHere: "State of Washington",
@@ -58,14 +56,13 @@ module.exports.validForm = validForm = {
   "p_3.7": true,
 };
 
-//Invalid form NO date in date of birth 
-module.exports.invalidForm =  invalidForm = {
-
+//Invalid form NO date in date of birth
+module.exports.invalidForm = invalidForm = {
   p_countyGoesHere: "King",
   p_stateOfWaGoesHere: "State of Washington",
   p_causeNumberGoesHere: "03-12123-123SA",
   p_nameOnJS: "The Dude",
-  p_dateOfBirth: 'adfsd',//INVALID DATA NO DATE
+  p_dateOfBirth: "adfsd", //INVALID DATA NO DATE
   p_pcnTcn: "2333",
   p_sid: "12347",
   p_publicAssistance: "Need public assistance",

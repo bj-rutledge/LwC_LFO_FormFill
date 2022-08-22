@@ -17,19 +17,9 @@
  */
 
 const { validForm, invalidForm } = require("../testObjects");
-const {ValidationError} = require('Joi');
 
+const validateSchema = require("../../src/validation/gr39Form");
 
-const validateSchema = require('../../src/validation/gr39Form');
-// function tst(){
-//   const valid = validateSchema(validForm); 
-//   const invalid = validateSchema(invalidForm); 
-//   console.log(valid.error instanceof ValidationError);
-//   console.log(invalid.error instanceof ValidationError);
-
-// }
-
-// tst()
 // /**Test to see if we receive an error property. */
 // // const validateSchema = (testObj) => schema.validate(testObj).hasOwnProperty("error");
 
@@ -40,5 +30,5 @@ test("should return undefined for valid form", () => {
 
 /**test schema with invalid object. Make sure that we are getting setting rules properly */
 test("should return am object for invalid form", () => {
-  expect(typeof validateSchema(invalidForm).error).toBe('object');
+  expect(typeof validateSchema(invalidForm).error).toBe("object");
 });

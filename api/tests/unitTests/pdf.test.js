@@ -15,9 +15,12 @@ const fs = require("fs");
 // console.log(pdfBin)
 test("Should write to fs", () => {
   return gr39fillForm(validForm)
-    .then(pdf => {
-        // console.log('test -- PDF ',pdf);
-      const saveFile = fs.writeFileSync("D:\\OneDrive\\Documents\\projects\\LivingWithConviction\\FormFiller\\LwC_LFO_FormFill\\api\\resources\\testout.pdf", pdf);
+    .then((pdf) => {
+      // console.log('test -- PDF ',pdf);
+      const saveFile = fs.writeFileSync(
+        "D:\\OneDrive\\Documents\\projects\\LivingWithConviction\\FormFiller\\LwC_LFO_FormFill\\api\\resources\\testout.pdf",
+        pdf
+      );
       const saved = saveFile == undefined ? true : false;
       expect(saved).toBe(true);
     })
