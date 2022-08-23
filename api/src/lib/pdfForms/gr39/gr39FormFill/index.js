@@ -6,11 +6,9 @@
  * Fill out Petition and Order forms.
  */
 
-const gr39Schema = require("../gr39formSchema");
-const { fields } = require("../gr39Fields");
-const { PDFDocument } = require("pdf-lib");
-const pdf = require("../gr39pdf");
-const { forbidden, object } = require("joi");
+const { fields } = require('../gr39Fields');
+const { PDFDocument } = require('pdf-lib');
+const pdf = require('../gr39pdf');
 
 /**
  * Fills out form and returns promise. Promise resolve is a pdf binary
@@ -18,24 +16,33 @@ const { forbidden, object } = require("joi");
  * @param {object} formData Validated form object.
  */
 module.exports = async function fillForm(formData) {
-  console.debug("entering fillForm");
+  console.debug('entering fillForm');
+  console.debug(formData);
   let error, formBytes;
   try {
     const doc = await PDFDocument.load(pdf);
     const form = doc.getForm();
-    // console.debug(formData);
-    fields.textboxes.forEach((textbox) => {
-      // console.debug('textbox: ',textbox, ' Value: ', formData[textbox]);
-
-      form.getTextField(textbox).setText("TEST");
-    });
-
-    fields.checkboxes.forEach((checkbox) => {
-      // console.debug('checkbox: ',checkbox, ' Value: ', formData[checkbox]);
-      if (formData[checkbox]) {
-        form.getCheckBox(checkbox).check();
+    for (let prop in formData) {
+      if (typeof prop === 'boolean' && formData[prop] == true) {
+        console.debug('checkbox', prop, 'value', formData[prop]);
+        form.getCheckBox(prop).check();
+      } else if (typeof prop === 'string') {
+        console.debug('checkbox:', prop, formData[prop]);
+        form.getTextField(prop).setText(formData[prop]);
       }
-    });
+    }
+    // console.debug(formData);
+    // fields.textboxes.forEach((textbox) => {
+    //   console.debug('textbox: ',textbox, ' Value: ', formData[textbox]);
+    //   form.getTextField(textbox).setText(formData[textbox]);
+    // });
+
+    // fields.checkboxes.forEach((checkbox) => {
+    //   // console.debug('checkbox: ',checkbox, ' Value: ', formData[checkbox]);
+    //   if (formData[checkbox]) {
+    //     form.getCheckBox(checkbox).check();
+    //   }
+    // });
 
     /**
      * Flattening a form field will take the current appearance for each of
@@ -55,14 +62,16 @@ module.exports = async function fillForm(formData) {
     // console.debug('saving bytes');
     formBytes = await doc.save();
     // console.debug('FORM BYTES: ',formBytes);
-  } catch (error) {
-    console.log("error", error);
+  } catch (_error) {
+    console.debug('error', error);
     //todo set up error handling and plug in logger
-    error = new Error(error);
+
+    error = _error;
   }
 
   return new Promise((resolve, reject) => {
     if (error) {
+      console.debug('Error writing pdf.');
       reject(error);
     } else {
       resolve(formBytes);

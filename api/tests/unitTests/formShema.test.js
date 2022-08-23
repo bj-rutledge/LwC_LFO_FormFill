@@ -16,19 +16,19 @@
  *      p_3.6 is checked p_notWillfull is populated
  */
 
-const { validForm, invalidForm } = require("../testObjects");
+const { validForm, invalidForm } = require('../testObjects');
 
-const validateSchema = require("../../src/validation/gr39Form");
+const validateSchema = require('../../src/validation/gr39Form');
 
 // /**Test to see if we receive an error property. */
-// // const validateSchema = (testObj) => schema.validate(testObj).hasOwnProperty("error");
+// // const validateSchema = (testObj) => schema.validate(testObj).hasOwnProperty('error');
 
 /**test schema with valid object. Make sure that we are getting setting rules properly */
-test("should return undefined for valid form", () => {
+test('should return undefined for valid form', () => {
   expect(validateSchema(validForm).error).toBe(undefined);
 });
 
 /**test schema with invalid object. Make sure that we are getting setting rules properly */
-test("should return am object for invalid form", () => {
-  expect(typeof validateSchema(invalidForm).error).toBe("object");
+test('should return am object for invalid form', () => {
+  expect(typeof validateSchema(invalidForm).error).toBe('object');
 });

@@ -4,7 +4,7 @@
  * Living with Conviction.org
  * Validates GR39 form data object
  */
-const gr39formSchema = require("../../lib/pdfForms/gr39/gr39formSchema");
+const gr39formSchema = require('../../lib/pdfForms/gr39/gr39formSchema');
 
 /**
  * Validate object data. Returns false if not properly filled out.
