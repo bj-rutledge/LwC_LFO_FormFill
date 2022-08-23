@@ -155,7 +155,7 @@ const keys = {
   o_stateOfWashington: Joi.string()
     .default('State of Washington')
     .describe('State of Washington'),
-  o_nameOnJns: Joi.string().required().description('Name as it appears on JNS'),
+  o_nameOnJS: Joi.string().required().description('Name as it appears on JNS'),
   o_dateOfBirth: Joi.string().required().description('date of birth'),
   o_causeNumberGoesHere: Joi.string().required().description('Cause number'),
   o_pcnTcn: Joi.string().description('PCN/TCN'),

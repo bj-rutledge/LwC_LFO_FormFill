@@ -6,43 +6,30 @@
  * Fill out Petition and Order forms.
  */
 
-const { fields } = require('../gr39Fields');
+// const { fields } = require('../gr39Fields');
 const { PDFDocument } = require('pdf-lib');
 const pdf = require('../gr39pdf');
 
 /**
  * Fills out form and returns promise. Promise resolve is a pdf binary
  * Make sure that the form data has passed through validation!!!
+ * If flatten is set to true, PDF will be flattened. 
+ * * All field names will be deleted if flattened!!!
  * @param {object} formData Validated form object.
+ * @param {boolean} flatten Flatten PDF. 
  */
-module.exports = async function fillForm(formData) {
-  console.debug('entering fillForm');
-  console.debug(formData);
+module.exports = async function fillForm(formData, flatten) {
   let error, formBytes;
   try {
     const doc = await PDFDocument.load(pdf);
     const form = doc.getForm();
     for (let prop in formData) {
-      if (typeof prop === 'boolean' && formData[prop] == true) {
-        console.debug('checkbox', prop, 'value', formData[prop]);
+      if (formData[prop] === true) {
         form.getCheckBox(prop).check();
-      } else if (typeof prop === 'string') {
-        console.debug('checkbox:', prop, formData[prop]);
-        form.getTextField(prop).setText(formData[prop]);
+      } else if (typeof formData[prop] === 'string') {
+          form.getTextField(prop).setText(formData[prop]);
       }
     }
-    // console.debug(formData);
-    // fields.textboxes.forEach((textbox) => {
-    //   console.debug('textbox: ',textbox, ' Value: ', formData[textbox]);
-    //   form.getTextField(textbox).setText(formData[textbox]);
-    // });
-
-    // fields.checkboxes.forEach((checkbox) => {
-    //   // console.debug('checkbox: ',checkbox, ' Value: ', formData[checkbox]);
-    //   if (formData[checkbox]) {
-    //     form.getCheckBox(checkbox).check();
-    //   }
-    // });
 
     /**
      * Flattening a form field will take the current appearance for each of
@@ -58,12 +45,13 @@ module.exports = async function fillForm(formData) {
      * pages into the recipient document - the filled fields will be copied
      * over.
      */
-    form.flatten();
-    // console.debug('saving bytes');
+    if(flatten){
+        form.flatten();
+    }
     formBytes = await doc.save();
-    // console.debug('FORM BYTES: ',formBytes);
+    
   } catch (_error) {
-    console.debug('error', error);
+    console.debug('Catch error', _error);
     //todo set up error handling and plug in logger
 
     error = _error;
@@ -71,7 +59,7 @@ module.exports = async function fillForm(formData) {
 
   return new Promise((resolve, reject) => {
     if (error) {
-      console.debug('Error writing pdf.');
+      console.debug('Error writing pdf.', error);
       reject(error);
     } else {
       resolve(formBytes);

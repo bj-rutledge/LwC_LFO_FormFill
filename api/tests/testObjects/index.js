@@ -57,7 +57,7 @@ module.exports.validForm = validForm = {
   //Order Keys
   o_superiorGoesHere: 'King County Superior Court',
   o_countyGoesHere: 'King',
-  o_nameOnJns: 'John Doe',
+  o_nameOnJS: 'John Doe',
   o_dateOfBirth: new Date(1977, 4, 11).toString(),
   //todo take cause no from above
   o_causeNumberGoesHere: '03-12123-123SA',
@@ -138,7 +138,7 @@ module.exports.invalidForm = invalidForm = {
   //Order Keys
   o_superiorGoesHere: 'King County Superior Court',
   o_countyGoesHere: 'King',
-  o_nameOnJns: 'John Doe',
+  o_nameOnJS: 'John Doe',
   o_dateOfBirth: new Date(1977, 4, 11).toString(),
   //todo take cause no from above
   o_causeNumberGoesHere: '03-12123-123SA',
