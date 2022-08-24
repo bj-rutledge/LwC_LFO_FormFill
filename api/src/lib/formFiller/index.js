@@ -6,8 +6,10 @@
  * Fill out Petition and Order forms.
  */
 
+
 // const { fields } = require('../gr39Fields');
 const { PDFDocument } = require('pdf-lib');
+const {logger, level:logLevel} = require('../logger');
 
 /**
  * Fills out form and returns promise. Promise resolve is a pdf binary
@@ -20,6 +22,7 @@ const { PDFDocument } = require('pdf-lib');
 module.exports = async function fillForm(formData, flatten, pdf) {
   let error, formBytes;
   try {
+    logger.log(logLevel.info, 'Processing form fill.');
     const doc = await PDFDocument.load(pdf);
     const form = doc.getForm();
     for (let prop in formData) {
@@ -49,17 +52,15 @@ module.exports = async function fillForm(formData, flatten, pdf) {
     }
     formBytes = await doc.save();
   } catch (_error) {
-    console.debug('Catch error', _error);
-    //todo set up error handling and plug in logger
-
+    logger.log(logLevel.error, `formFill:${_error}`);
     error = _error;
   }
 
   return new Promise((resolve, reject) => {
     if (error) {
-      console.debug('Error writing pdf.', error);
       reject(error);
     } else {
+    logger.log(logLevel.info, 'Success @ form fill.');
       resolve(formBytes);
     }
   });

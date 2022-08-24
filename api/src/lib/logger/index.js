@@ -5,19 +5,49 @@
  * App Logger
  */
 
-const winston = require('winston');
+const { createLogger, format, transports} = require('winston');
 
-const logger = winston.createLogger({
-  level: 'info',
-  format: winston.format.json(),
-  defaultMeta: { service: 'user-service' },
+//Custom format
+const printFormat = format.printf(({level, message, timestamp, ...metadata}) => `${timestamp} [${level}] : ${message}} ${metadata? JSON.stringify(metadata): ''}`);
+
+/**
+ * Winston default levels:
+ * error: 0,
+ * warn: 1,
+ * info: 2,
+ * http: 3,
+ * verose: 4,
+ * debug: 5,
+ * silly: 6
+ */
+const level = {
+  error: 'error',
+  warn: 'warn',
+  info: 'info',
+  http: 'http',
+  verbose: 'verbose',
+  debug: 'debug',
+  silly: 'debug',
+};
+
+const logger = createLogger({
+  level: level,
+  format: format.combine(
+    format.timestamp({
+      format: 'YY-MM-DD HH:mm:ss',
+    }),
+    format.errors({ stack: true }),
+    format.splat(),
+    printFormat
+  ),
+  defaultMeta: { service: 'form-filler-api' },
   transports: [
-    //
-    // - Write all logs with importance level of `error` or less to `error.log`
-    // - Write all logs with importance level of `info` or less to `combined.log`
-    //
-    new winston.transports.File({ filename: 'error.log', level: 'error' }),
-    new winston.transports.File({ filename: 'combined.log' }),
+    /**write all logs with an importance level of error amd debug to their own files 
+     * and write all logs to a combined log
+     */
+    new transports.File({ filename: 'api-error.log', level: level.error}),
+    new transports.File({ filename: 'api-debug.log', level: level.debug}),
+    new transports.File({ filename: 'api-combined.log', level:level })
   ],
 });
 
@@ -27,10 +57,11 @@ const logger = winston.createLogger({
 //
 if (process.env.NODE_ENV !== 'production') {
   logger.add(
-    new winston.transports.Console({
-      format: winston.format.simple(),
+    new transports.Console({
+      format: format.combine(format.colorize(), format.simple()),
     })
   );
 }
 
-module.exports = logger;
+module.exports.logger = logger;
+module.exports.level = level;
