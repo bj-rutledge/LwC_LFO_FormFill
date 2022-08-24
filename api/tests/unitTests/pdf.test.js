@@ -3,18 +3,18 @@
  * Date: 2022-08-21
  * Living with Conviction.org
  */
-//Test One requirements 
+//Test One requirements
 const gr39fillForm = require('../../src/lib/pdfForms/gr39/gr39FormFill');
 const { validForm } = require('../testObjects');
 
-//Test 2 requirements 
-const outPath = 'D:\\OneDrive\\Documents\\projects\\LivingWithConviction\\FormFiller\\LwC_LFO_FormFill\\api\\tests\\unitTests\\output\\testFilledForm.pdf';
+//Test 2 requirements
+const outPath =
+  'D:\\OneDrive\\Documents\\projects\\LivingWithConviction\\FormFiller\\LwC_LFO_FormFill\\api\\tests\\unitTests\\output\\testFilledForm.pdf';
 const { PDFDocument } = require('pdf-lib');
 const fs = require('fs');
 
-
 test('Should read in PDF, fill out form with Data and then write to fs', () => {
-  //We do not want to flatten this form so that we can 
+  //We do not want to flatten this form so that we can
   //read it in in the following test.
   const flattenForm = false;
   return gr39fillForm(validForm, flattenForm)
@@ -30,20 +30,19 @@ test('Should read in PDF, fill out form with Data and then write to fs', () => {
     });
 });
 
-test('Should read PDF that was created in previous test. PDF fields should equal validForm fields', ()=> {
+test('Should read PDF that was created in previous test. PDF fields should equal validForm fields', () => {
   fs.readFile(outPath, (err, data) => {
-    PDFDocument.load(data).then(pdf => {
+    PDFDocument.load(data).then((pdf) => {
       const doc = pdf.getForm();
-      for(prop in validForm){
-        if( validForm[prop] === true){
-          let isChecked = doc.getCheckBox(prop).isChecked()
+      for (prop in validForm) {
+        if (validForm[prop] === true) {
+          let isChecked = doc.getCheckBox(prop).isChecked();
           expect(isChecked).toBe(true);
-        }
-        else if(typeof validForm[prop] === 'string'){
+        } else if (typeof validForm[prop] === 'string') {
           let textField = doc.getTextField(prop).getText();
           expect(textField).toBe(validForm[prop]);
         }
       }
-    })
+    });
   });
-})
+});
