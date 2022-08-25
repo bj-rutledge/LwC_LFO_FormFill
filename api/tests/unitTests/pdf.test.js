@@ -6,15 +6,14 @@
 //Test One requirements
 const gr39fillForm = require('../../src/lib/pdfForms/gr39/gr39FormFill');
 const { validForm } = require('../testObjects');
-const {logger, level: loggerLevel} = require('../../src/lib/logger')
+const { logger, levels: loggerLevels } = require('../../src/lib/logger');
+const path = require('path');
 
-//Test 2 requirements
-const outPath =
-  'D:\\OneDrive\\Documents\\projects\\LivingWithConviction\\FormFiller\\LwC_LFO_FormFill\\api\\tests\\unitTests\\output\\testFilledForm.pdf';
+const outPath = path.join(__dirname, '../unitTests/output/testFilledForm.pdf');
 const { PDFDocument } = require('pdf-lib');
 const fs = require('fs');
 
-logger.log(loggerLevel.debug, 'Testing PDF form fill.')
+logger.log(loggerLevels.debug, 'Testing PDF form fill.');
 test('Should read in PDF, fill out form with Data and then write to fs', () => {
   //We do not want to flatten this form so that we can
   //read it in in the following test.

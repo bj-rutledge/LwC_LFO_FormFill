@@ -11,6 +11,6 @@ const gr39formSchema = require('../../lib/pdfForms/gr39/gr39formSchema');
  * @param {object} testObj Form object
  * @returns bool
  */
-const validateg39Schema = (testObj) => gr39formSchema.validate(testObj);
+const validategr39Schema = (testObj) => gr39formSchema.validate(testObj);
 
-module.exports = validateg39Schema;
+module.exports = validategr39Schema;

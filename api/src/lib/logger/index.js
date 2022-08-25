@@ -19,7 +19,7 @@ const levels = {
   info: 'info',
   http: 'http',
   debug: 'debug',
-  critical: 'critical'
+  critical: 'critical',
 };
 
 const logger = createLogger({
@@ -39,11 +39,11 @@ const logger = createLogger({
   ),
   defaultMeta: { service: 'form-filler-api' },
   transports: [
-    /**write all logs with an importance level of error, debug, http, and debug to 
+    /**write all logs with an importance level of error, debug, http, and debug to
      * their own files and all logs combined to api.log
      */
     new transports.File({ filename: 'api-error.log', level: levels.error }),
-    new transports.File({filename: 'api-http.log', level: levels.http}),
+    new transports.File({ filename: 'api-http.log', level: levels.http }),
     new transports.File({ filename: 'api-debug.log', level: levels.debug }),
     new transports.File({ filename: 'api.log', levels: levels }),
   ],
@@ -62,4 +62,4 @@ if (process.env.NODE_ENV !== 'production') {
 }
 
 module.exports.logger = logger;
-module.exports.level = levels;
+module.exports.levels = levels;

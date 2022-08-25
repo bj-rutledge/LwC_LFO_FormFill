@@ -8,7 +8,7 @@
 
 // const { fields } = require('../gr39Fields');
 const { PDFDocument } = require('pdf-lib');
-const { logger, level: logLevel } = require('../logger');
+const { logger, levels: logLevels } = require('../logger');
 
 /**
  * Fills out form and returns promise. Promise resolve is a pdf binary
@@ -21,7 +21,7 @@ const { logger, level: logLevel } = require('../logger');
 module.exports = async function fillForm(formData, flatten, pdf) {
   let error, formBytes;
   try {
-    logger.log(logLevel.info, 'Processing form fill.');
+    logger.log(logLevels.info, 'Processing form fill.');
     const doc = await PDFDocument.load(pdf);
     const form = doc.getForm();
     for (let prop in formData) {
@@ -29,7 +29,11 @@ module.exports = async function fillForm(formData, flatten, pdf) {
         form.getCheckBox(prop).check();
       } else {
         //} if (typeof formData[prop] === 'string') {
-        form.getTextField(prop).setText(formData[prop]);
+        const textField = form.getTextField(prop);
+        if (formData[prop].length > 61) {
+          textField.enableMultiline();
+        }
+        textField.setText(formData[prop]);
       }
     }
 
@@ -52,7 +56,7 @@ module.exports = async function fillForm(formData, flatten, pdf) {
     }
     formBytes = await doc.save();
   } catch (_error) {
-    logger.log(logLevel.error, `formFill:${_error}`);
+    logger.log(logLevels.error, `formFill:${_error}`);
     error = _error;
   }
 
@@ -60,7 +64,7 @@ module.exports = async function fillForm(formData, flatten, pdf) {
     if (error) {
       reject(error);
     } else {
-      logger.log(logLevel.info, 'Success @ form fill.');
+      logger.log(logLevels.info, 'Success @ form fill.');
       resolve(formBytes);
     }
   });

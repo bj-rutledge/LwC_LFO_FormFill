@@ -19,7 +19,8 @@ module.exports.validForm = validForm = {
   //checkboxes with dependencies.
   p_basicLivingExpenses: 'Lots of expenses',
   p_otherCompelling: 'Many reasons',
-  p_cantDoCommSvc: 'I am busy',
+  p_cantDoCommSvc:
+    'ederally established poverty level but I have recurring basic li\nederally established poverty level but I have recurring basic li\nederally established poverty level but I have recurring basic li',
   p_notWillful: 'Not willful',
   p_signedAtCity: 'seattle',
   p_signedAtState: 'WA',
@@ -90,7 +91,7 @@ module.exports.validForm = validForm = {
 module.exports.invalidForm = invalidForm = {
   p_countyGoesHere: 'King',
   p_stateOfWaGoesHere: 'State of Washington',
-  p_causeNumberGoesHere: '03-12123-123SA',
+  p_causeNumberGoesHere: '03-12123-12A', //(2digits)-(1 digit always == 1)-(five digits)-(one digit){if king county there will be a space SEA or KNT}
   p_nameOnJS: 'The Dude',
   p_dateOfBirth: 'adfsd', //INVALID DATA NO DATE
   p_pcnTcn: '2333',

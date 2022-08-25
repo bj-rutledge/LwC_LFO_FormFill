@@ -17,8 +17,8 @@
  */
 
 const { validForm, invalidForm } = require('../testObjects');
-const {logger, levels: logerLevels} = require('../../src/lib/logger');
-logger.log(logerLevels.debug, `Testing schema.`)
+const { logger, levels: loggerLevels } = require('../../src/lib/logger');
+logger.log(loggerLevels.debug, `Testing schema.`);
 const validateSchema = require('../../src/validation/gr39Form');
 
 // /**Test to see if we receive an error property. */
