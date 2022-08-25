@@ -6,6 +6,7 @@
 //Test One requirements
 const gr39fillForm = require('../../src/lib/pdfForms/gr39/gr39FormFill');
 const { validForm } = require('../testObjects');
+const {logger, level: loggerLevel} = require('../../src/lib/logger')
 
 //Test 2 requirements
 const outPath =
@@ -13,6 +14,7 @@ const outPath =
 const { PDFDocument } = require('pdf-lib');
 const fs = require('fs');
 
+logger.log(loggerLevel.debug, 'Testing PDF form fill.')
 test('Should read in PDF, fill out form with Data and then write to fs', () => {
   //We do not want to flatten this form so that we can
   //read it in in the following test.

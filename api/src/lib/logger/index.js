@@ -5,49 +5,47 @@
  * App Logger
  */
 
-const { createLogger, format, transports} = require('winston');
-
+const { createLogger, format, transports } = require('winston');
+const { printf, simple, errors, combine, timestamp, splat, colorize } = format;
 //Custom format
-const printFormat = format.printf(({level, message, timestamp, ...metadata}) => `${timestamp} [${level}] : ${message}} ${metadata? JSON.stringify(metadata): ''}`);
+// const printFormat = format.printf(({level, message, timestamp, ...metadata}) => `${timestamp} [${level}] : ${message}} ${metadata? JSON.stringify(metadata): ''}`);
 
 /**
- * Winston default levels:
- * error: 0,
- * warn: 1,
- * info: 2,
- * http: 3,
- * verose: 4,
- * debug: 5,
- * silly: 6
+ * Winston default levels:CU
  */
-const level = {
+const levels = {
   error: 'error',
   warn: 'warn',
   info: 'info',
   http: 'http',
-  verbose: 'verbose',
   debug: 'debug',
-  silly: 'debug',
+  critical: 'critical'
 };
 
 const logger = createLogger({
-  level: level,
-  format: format.combine(
-    format.timestamp({
+  levels: levels,
+  format: combine(
+    timestamp({
       format: 'YY-MM-DD HH:mm:ss',
     }),
-    format.errors({ stack: true }),
-    format.splat(),
-    printFormat
+    errors({ stack: true }),
+    splat(),
+    printf(
+      ({ level, message, timestamp, ...metadata }) =>
+        `${timestamp} [${level}] : ${message}} ${
+          metadata ? JSON.stringify(metadata) : ''
+        }`
+    )
   ),
   defaultMeta: { service: 'form-filler-api' },
   transports: [
-    /**write all logs with an importance level of error amd debug to their own files 
-     * and write all logs to a combined log
+    /**write all logs with an importance level of error, debug, http, and debug to 
+     * their own files and all logs combined to api.log
      */
-    new transports.File({ filename: 'api-error.log', level: level.error}),
-    new transports.File({ filename: 'api-debug.log', level: level.debug}),
-    new transports.File({ filename: 'api-combined.log', level:level })
+    new transports.File({ filename: 'api-error.log', level: levels.error }),
+    new transports.File({filename: 'api-http.log', level: levels.http}),
+    new transports.File({ filename: 'api-debug.log', level: levels.debug }),
+    new transports.File({ filename: 'api.log', levels: levels }),
   ],
 });
 
@@ -58,10 +56,10 @@ const logger = createLogger({
 if (process.env.NODE_ENV !== 'production') {
   logger.add(
     new transports.Console({
-      format: format.combine(format.colorize(), format.simple()),
+      format: combine(colorize(), simple()),
     })
   );
 }
 
 module.exports.logger = logger;
-module.exports.level = level;
+module.exports.level = levels;

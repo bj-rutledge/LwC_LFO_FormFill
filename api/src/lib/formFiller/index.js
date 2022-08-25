@@ -6,10 +6,9 @@
  * Fill out Petition and Order forms.
  */
 
-
 // const { fields } = require('../gr39Fields');
 const { PDFDocument } = require('pdf-lib');
-const {logger, level:logLevel} = require('../logger');
+const { logger, level: logLevel } = require('../logger');
 
 /**
  * Fills out form and returns promise. Promise resolve is a pdf binary
@@ -28,7 +27,8 @@ module.exports = async function fillForm(formData, flatten, pdf) {
     for (let prop in formData) {
       if (formData[prop] === true) {
         form.getCheckBox(prop).check();
-      } else {//} if (typeof formData[prop] === 'string') {
+      } else {
+        //} if (typeof formData[prop] === 'string') {
         form.getTextField(prop).setText(formData[prop]);
       }
     }
@@ -60,7 +60,7 @@ module.exports = async function fillForm(formData, flatten, pdf) {
     if (error) {
       reject(error);
     } else {
-    logger.log(logLevel.info, 'Success @ form fill.');
+      logger.log(logLevel.info, 'Success @ form fill.');
       resolve(formBytes);
     }
   });

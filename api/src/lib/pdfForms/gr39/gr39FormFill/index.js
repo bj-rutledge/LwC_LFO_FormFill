@@ -10,5 +10,5 @@
 const pdf = require('../gr39pdf');
 const formFiller = require('../../../formFiller');
 
-module.exports = gr39FormFill = (formData, flatten) => formFiller(formData, flatten, pdf);
-
+module.exports = gr39FormFill = (formData, flatten) =>
+  formFiller(formData, flatten, pdf);
