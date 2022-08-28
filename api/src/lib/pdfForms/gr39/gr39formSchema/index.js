@@ -103,6 +103,7 @@ const keys = {
     .allow('')
     .default(''),
   p_notWillful: Joi.string().description('Reason for non payment').default(''),
+  p_notWillful2: Joi.string().description('If p_notWillful.length > 100, we divide the text between these two props.'),
   p_signedAtCity: Joi.string().required().description('Signed at City'),
   p_signedAtState: Joi.string().required().description('Signed at state'),
   p_signedOnDate: Joi.date().required().description('Signed on Date'),

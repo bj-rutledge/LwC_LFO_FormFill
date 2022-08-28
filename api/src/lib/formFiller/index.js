@@ -9,6 +9,9 @@
 // const { fields } = require('../gr39Fields');
 const { PDFDocument } = require('pdf-lib');
 const { logger, levels: logLevels } = require('../logger');
+const stringWordWrap = require('../stringWordWrap');
+// const fontkit = require('@pdf-lib/fontkit');
+// const fs = require('fs')
 
 /**
  * Fills out form and returns promise. Promise resolve is a pdf binary
@@ -19,8 +22,10 @@ const { logger, levels: logLevels } = require('../logger');
  * @param {boolean} flatten Flatten PDF.
  */
 module.exports = async function fillForm(formData, flatten, pdf) {
+  const fontSize = 14.1;
   let error, formBytes;
   try {
+    
     logger.log(logLevels.info, 'Processing form fill.');
     const doc = await PDFDocument.load(pdf);
     const form = doc.getForm();
@@ -30,10 +35,15 @@ module.exports = async function fillForm(formData, flatten, pdf) {
       } else {
         //} if (typeof formData[prop] === 'string') {
         const textField = form.getTextField(prop);
-        if (formData[prop].length > 61) {
+        
+        const text = formData[prop].lenght > 61? stringWordWrap(formData[prop]):formData[prop]; 
+
+        if (text.length > 61) {
           textField.enableMultiline();
+
         }
         textField.setText(formData[prop]);
+        textField.setFontSize(fontSize);
       }
     }
 

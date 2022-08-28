@@ -10,7 +10,7 @@ const fs = require('fs');
 const path = require('path');
 const pdfPath = path.join(
   __dirname,
-  '../../../../../tests/testPdf/fullGR39WithFields--FIELD-NAMES.pdf'
+  '../../../../../tests/testPdf/fullGR39WithFields.pdf'
 );
 
 const file = fs.readFileSync(pdfPath);
