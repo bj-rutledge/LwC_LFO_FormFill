@@ -27,7 +27,6 @@ const wordWrap = (text, width) => {
     }
 
     if (word.length + currentLineLength < width) {
-      
       result.push(`${word} `);
       currentLineLength += word.length + 1;
     } else {
@@ -35,11 +34,11 @@ const wordWrap = (text, width) => {
       result.push(`\n${word} `);
       currentLineLength = word.length;
       // if(i >= 1){
-        result[i - 1] = result[i - 1].trim();
+      result[i - 1] = result[i - 1].trim();
       // }
     }
   }
-  result[result.length -1] = result[result.length - 1].trim();
+  result[result.length - 1] = result[result.length - 1].trim();
   return result.join('');
 };
 

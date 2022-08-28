@@ -25,7 +25,6 @@ module.exports = async function fillForm(formData, flatten, pdf) {
   const fontSize = 14.1;
   let error, formBytes;
   try {
-    
     logger.log(logLevels.info, 'Processing form fill.');
     const doc = await PDFDocument.load(pdf);
     const form = doc.getForm();
@@ -35,12 +34,14 @@ module.exports = async function fillForm(formData, flatten, pdf) {
       } else {
         //} if (typeof formData[prop] === 'string') {
         const textField = form.getTextField(prop);
-        
-        const text = formData[prop].lenght > 61? stringWordWrap(formData[prop]):formData[prop]; 
+
+        const text =
+          formData[prop].lenght > 61
+            ? stringWordWrap(formData[prop])
+            : formData[prop];
 
         if (text.length > 61) {
           textField.enableMultiline();
-
         }
         textField.setText(formData[prop]);
         textField.setFontSize(fontSize);

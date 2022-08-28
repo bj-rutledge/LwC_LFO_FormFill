@@ -42,9 +42,18 @@ const logger = createLogger({
     /**write all logs with an importance level of error, debug, http, and debug to
      * their own files and all logs combined to api.log
      */
-    new transports.File({ filename: './logs/api-error.log', level: levels.error }),
-    new transports.File({ filename: './logs/api-http.log', level: levels.http }),
-    new transports.File({ filename: './logs/api-debug.log', level: levels.debug }),
+    new transports.File({
+      filename: './logs/api-error.log',
+      level: levels.error,
+    }),
+    new transports.File({
+      filename: './logs/api-http.log',
+      level: levels.http,
+    }),
+    new transports.File({
+      filename: './logs/api-debug.log',
+      level: levels.debug,
+    }),
     new transports.File({ filename: './logs/api.log', levels: levels }),
   ],
 });

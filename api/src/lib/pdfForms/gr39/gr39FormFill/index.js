@@ -33,7 +33,7 @@ module.exports = gr39FormFill = (formData, flatten) => {
     const divided = divideText(formData['p_notWillful']);
     formData.p_notWillful = divided[0];
     if (divided[1].length > 0) {
-      formData.p_notWillful2= divided[1];
+      formData.p_notWillful2 = divided[1];
     }
   }
   return formFiller(formData, flatten, pdf);
