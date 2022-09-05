@@ -4,7 +4,9 @@
   "description": "Api for LwC LFO form filler.",
   "main": "index.js",
   "scripts": {
-    "test": "jest"
+    "test": "jest",
+    "start": "node ./bin/www",
+    "dev": "nodemon ./bin/www"
   },
   "repository": {
     "type": "git",
@@ -24,9 +26,11 @@
   "homepage": "https://github.com/bj-rutledge/LwC_LFO_FormFill#readme",
   "dependencies": {
     "@pdf-lib/fontkit": "^1.1.1",
+    "cookie-parser": "^1.4.6",
     "dotenv": "^16.0.1",
     "express": "^4.18.1",
     "joi": "^17.6.0",
+    "mongoose": "^6.5.4",
     "path": "^0.12.7",
     "pdf-lib": "^1.17.1",
     "winston": "^3.8.1"
