@@ -1,4 +1,4 @@
-# Living with Conviction Legal Financial Oblication Form filler.
+# Living with Conviction Legal Financial Obligation Form filler.
 ## At Living with Conviction, we help people. 
 ## The end.
 ### #visualizeJustice
