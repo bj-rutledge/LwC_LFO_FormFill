@@ -1,0 +1,26 @@
+{
+  "name": "api",
+  "version": "1.0.0",
+  "description": "",
+  "scripts": {
+    "start": "func start",
+    "test": "echo \"No tests yet...\""
+  },  
+  "keywords": [
+    "pdf",
+    "form",
+    "'form",
+    "filler'"
+  ],
+  "author": "BJ Rutledge (Living with Conviction)",
+  "license": "APACHE 2.0",
+  "bugs": {
+    "url": "https://github.com/bj-rutledge/LwC_LFO_FormFill/issues"
+  },
+  "homepage": "https://github.com/bj-rutledge/LwC_LFO_FormFill#readme",
+  "dependencies": {
+    "dotenv": "^16.0.1",
+    "pdf-lib": "^1.17.1"
+  },
+  "devDependencies": {}
+}
